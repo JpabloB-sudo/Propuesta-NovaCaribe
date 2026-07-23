@@ -11,18 +11,18 @@ nova-caribe/
 └── images/                      (carpeta para tus fotos/logo)
 ```
 
-## Cómo funciona la navegación ahora
-- `index.html` tiene TODO el contenido en una sola página, dividido en
+## Cómo funciona la navegación
+- `index.html` tiene todo el contenido en una sola página, dividido en
   secciones con id: `#inicio`, `#nosotros`, `#precios`, `#productos`.
 - El menú del header (Nosotros / Precios / Productos) hace scroll suave
   a cada sección. Mientras el usuario baja, el enlace correspondiente se
   resalta solo (scroll-spy con `aria-current="true"`).
 - "Contacto" es la única página aparte: aquí vive el formulario.
 - Los enlaces del menú usan `index.html#seccion`, así que funcionan igual
-  estando en `index.html` o en `contacto.html` — siempre te llevan a la
+  estando en `index.html` o en `contacto.html`  siempre te llevan a la
   sección correcta.
 
-## Botón "volver arriba" (pensado para móvil)
+## Botón de volver arriba pensado para celulares y navegación vertical
 - Aparece solo después de bajar ~480px (aprox. después de pasar el hero).
 - No es intrusivo: abajo a la derecha, opuesto al botón de WhatsApp
   (abajo a la izquierda), así nunca se superponen.
@@ -35,7 +35,7 @@ El formulario de `contacto.html` guarda cada mensaje como un documento
 en la colección `mensajes` de Firestore (nombre, correo, teléfono,
 motivo, mensaje y fecha con `serverTimestamp()`).
 
-### Pasos para activarlo con tu propio proyecto
+### Pasos para activarlo
 1. Ve a https://console.firebase.google.com y crea un proyecto (gratis).
 2. Dentro del proyecto, activa **Firestore Database** (modo producción).
 3. En "Configuración del proyecto" → "Tus apps", registra una app web
