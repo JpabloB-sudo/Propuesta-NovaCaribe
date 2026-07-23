@@ -1,0 +1,632 @@
+/* ============================================================
+   NOVA CARIBE — SISTEMA DE DISEÑO
+   Concepto: "El hilo que forma la ola" — industria textil + Caribe
+   paleta unificada en variables, CSS externo, sin estilos inline,
+   responsive real, sistema de componentes consistente
+   ============================================================ */
+
+/* -------------------- 1. DISEÑO -------------------- */
+:root {
+  /* Paleta oficial de marca (Sección 1 del PDF del cliente) */
+  --azul-caribe: #0A4D8C;
+  --azul-profundo: #06304F;   /* variante oscura para contraste AA */
+  --naranja-textil: #F28C28;
+  --naranja-suave: #FBE3C3;   /* tinte para fondos, nunca para texto */
+  --gris-oscuro: #2E2E2E;
+  --gris-medio: #5B6570;
+
+  /* Neutros de apoyo van hacia
+     el azul, evocando espuma de mar sobre lienzo de algodón */
+  --lienzo: #FFFEFB;
+  --espuma: #EEF4F8;
+  --espuma-borde: #D9E5EC;
+  --blanco: #FFFFFF;
+
+  /* Tipografía */
+  --fuente-display: "Fraunces", Georgia, serif;
+  --fuente-cuerpo: "Work Sans", "Segoe UI", sans-serif;
+
+  /* Escala tipográfica */
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2.5rem;
+  --fs-3xl: 3.25rem;
+
+  /* Espaciado */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  /* Otros */
+  --radio: 14px;
+  --radio-sm: 8px;
+  --sombra: 0 12px 32px -12px rgba(6, 48, 79, 0.28);
+  --borde: 1px solid var(--espuma-borde);
+  --transicion: 220ms ease;
+  --ancho-maximo: 1180px;
+}
+
+/* -------------------- 2. RESET Y BASE -------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px; /* deja espacio bajo el header fijo al saltar con #anclas */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente-cuerpo);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--gris-oscuro);
+  background: var(--lienzo);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3, h4 { font-family: var(--fuente-display); line-height: 1.15; margin: 0 0 var(--space-2); color: var(--azul-profundo); }
+h1 { font-size: var(--fs-3xl); font-weight: 700; }
+h2 { font-size: var(--fs-2xl); font-weight: 700; }
+h3 { font-size: var(--fs-xl); font-weight: 600; }
+p { margin: 0 0 var(--space-2); max-width: 68ch; }
+a { color: var(--azul-caribe); }
+ul { padding-left: 1.2em; }
+
+/* Foco visible en TODO elemento interactivo — requisito WCAG 2.4.7 */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--naranja-textil);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Enlace "saltar al contenido" — WCAG 2.4.1 */
+.saltar-contenido {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--azul-profundo);
+  color: var(--blanco);
+  padding: 0.8em 1.2em;
+  z-index: 2000;
+  border-radius: 0 0 8px 0;
+}
+.saltar-contenido:focus {
+  left: 0;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-maximo);
+  margin-inline: auto;
+  padding-inline: var(--space-3);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* -------------------- 3. HEADER FIJO -------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(6, 48, 79, 0.94);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.header-inner {
+  max-width: var(--ancho-maximo);
+  margin-inline: auto;
+  padding: 0.75rem var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--blanco);
+  text-decoration: none;
+  font-family: var(--fuente-display);
+}
+
+.marca img {
+  height: 42px;
+  width: auto;
+}
+
+.marca-texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.marca-texto strong { font-size: 1.05rem; letter-spacing: 0.02em; }
+.marca-texto span { font-size: 0.7rem; color: var(--naranja-textil); letter-spacing: 0.08em; text-transform: uppercase; }
+
+.nav-principal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav-principal ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+}
+
+.nav-principal a {
+  color: rgba(255,255,255,0.88);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  padding: 0.4em 0.1em;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transicion), color var(--transicion);
+}
+.nav-principal a:hover { color: var(--blanco); border-color: var(--naranja-textil); }
+.nav-principal a[aria-current="page"] {
+  color: var(--blanco);
+  border-color: var(--naranja-textil);
+  font-weight: 700;
+}
+
+.btn-menu {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: var(--radio-sm);
+  color: var(--blanco);
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.btn-menu svg { width: 22px; height: 22px; }
+
+/* -------------------- 4. BOTONES -------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  padding: 0.85em 1.5em;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transicion), box-shadow var(--transicion), background var(--transicion);
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primario {
+  background: var(--naranja-textil);
+  color: var(--azul-profundo); /* contraste ~7:1 sobre naranja, ver informe de accesibilidad */
+}
+.btn-primario:hover { background: #ffa14a; box-shadow: var(--sombra); }
+
+.btn-secundario {
+  background: transparent;
+  border-color: rgba(255,255,255,0.6);
+  color: var(--blanco);
+}
+.btn-secundario:hover { border-color: var(--blanco); background: rgba(255,255,255,0.08); }
+
+.btn-outline-azul {
+  background: transparent;
+  border-color: var(--azul-caribe);
+  color: var(--azul-caribe);
+}
+.btn-outline-azul:hover { background: var(--azul-caribe); color: var(--blanco); }
+
+/* -------------------- 5. HERO -------------------- */
+.hero {
+  position: relative;
+  background: linear-gradient(160deg, var(--azul-profundo) 0%, var(--azul-caribe) 100%);
+  color: var(--blanco);
+  padding: var(--space-6) 0 var(--space-5);
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-5);
+  align-items: center;
+  max-width: var(--ancho-maximo);
+  margin-inline: auto;
+  padding-inline: var(--space-3);
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--naranja-textil);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.hero h1 { color: var(--blanco); font-size: var(--fs-3xl); }
+.hero p.lead { color: rgba(255,255,255,0.85); font-size: var(--fs-lg); max-width: 46ch; }
+
+.hero-acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+
+/* elemento firma que recorre el sitio, evocando
+   el ícono del logo: carrete de hilo formando una ola */
+.hilo-ola {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.hilo-ola path {
+  fill: none;
+  stroke: var(--naranja-textil);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 2 14;
+  opacity: 0.85;
+}
+
+.hero-visual {
+  position: relative;
+}
+.hero-visual .marco-imagen {
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  border: 1px solid rgba(255,255,255,0.15);
+  aspect-ratio: 4 / 3;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divisor-hilo {
+  line-height: 0;
+  margin-top: calc(var(--space-4) * -1);
+}
+
+/* -------------------- 6. SECCIONES GENERALES -------------------- */
+.seccion { padding: var(--space-5) 0; }
+.seccion-alt { background: var(--espuma); }
+.seccion-header { max-width: 60ch; margin-bottom: var(--space-4); }
+.seccion-header .kicker {
+  display: block;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--naranja-textil);
+  font-weight: 700;
+  margin-bottom: 0.4em;
+}
+
+/* -------------------- 7. TARJETAS (servicios / stats) -------------------- */
+.grid-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+}
+
+.tarjeta {
+  background: var(--blanco);
+  border: var(--borde);
+  border-radius: var(--radio);
+  padding: var(--space-3);
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+.tarjeta:hover { transform: translateY(-4px); box-shadow: var(--sombra); }
+
+.tarjeta .icono-tarjeta {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: var(--naranja-suave);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: var(--space-2);
+  color: var(--azul-profundo);
+}
+.tarjeta .icono-tarjeta svg { width: 24px; height: 24px; }
+
+.tarjeta .precio {
+  display: inline-block;
+  margin-top: var(--space-1);
+  font-family: var(--fuente-display);
+  font-weight: 700;
+  color: var(--azul-caribe);
+  font-size: var(--fs-lg);
+}
+
+.franja-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  text-align: center;
+}
+.franja-stats .stat strong {
+  display: block;
+  font-family: var(--fuente-display);
+  font-size: var(--fs-2xl);
+  color: var(--azul-caribe);
+}
+.franja-stats .stat span { color: var(--gris-medio); font-size: var(--fs-sm); }
+
+/* -------------------- 8. TABLAS (precios) -------------------- */
+.tabla-envoltorio {
+  overflow-x: auto;
+  border-radius: var(--radio);
+  border: var(--borde);
+}
+table.tabla-precios {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+  background: var(--blanco);
+}
+.tabla-precios caption {
+  text-align: left;
+  padding: var(--space-2);
+  font-weight: 700;
+  color: var(--azul-profundo);
+}
+.tabla-precios th, .tabla-precios td {
+  text-align: left;
+  padding: 1em var(--space-2);
+  border-bottom: 1px solid var(--espuma-borde);
+}
+.tabla-precios thead th {
+  background: var(--azul-profundo);
+  color: var(--blanco);
+  font-family: var(--fuente-display);
+  font-weight: 600;
+}
+.tabla-precios tbody tr:hover { background: var(--espuma); }
+.tabla-precios td.precio-valor { font-weight: 700; color: var(--azul-caribe); white-space: nowrap; }
+
+/* -------------------- 9. FORMULARIO DE CONTACTO -------------------- */
+.formulario {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 560px;
+}
+.campo { display: flex; flex-direction: column; gap: 0.4em; }
+.campo label { font-weight: 600; font-size: var(--fs-sm); }
+.campo .requerido { color: var(--naranja-textil); }
+.campo input, .campo textarea, .campo select {
+  font-family: var(--fuente-cuerpo);
+  font-size: var(--fs-base);
+  padding: 0.75em 0.9em;
+  border-radius: var(--radio-sm);
+  border: 1.5px solid var(--espuma-borde);
+  background: var(--blanco);
+  color: var(--gris-oscuro);
+}
+.campo input:invalid[data-tocado="true"],
+.campo textarea:invalid[data-tocado="true"] {
+  border-color: #C4402A;
+}
+.campo .error-msg {
+  color: #B03A24;
+  font-size: var(--fs-xs);
+  min-height: 1.1em;
+}
+.form-estado {
+  padding: var(--space-2);
+  border-radius: var(--radio-sm);
+  background: var(--naranja-suave);
+  color: var(--azul-profundo);
+  font-weight: 600;
+  display: none;
+}
+.form-estado.visible { display: block; }
+
+/* -------------------- 10. FOOTER -------------------- */
+.site-footer {
+  background: var(--azul-profundo);
+  color: rgba(255,255,255,0.85);
+  padding: var(--space-5) 0 var(--space-3);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: var(--space-4);
+}
+.site-footer h2, .site-footer h3 { color: var(--blanco); }
+.site-footer a { color: rgba(255,255,255,0.85); }
+.site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6em; }
+.footer-marca { display: flex; align-items: center; gap: 0.6em; margin-bottom: var(--space-2); }
+.footer-marca img { height: 38px; }
+.footer-base {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  font-size: var(--fs-xs);
+  color: rgba(255,255,255,0.6);
+}
+
+/* -------------------- 11. BOTÓN FLOTANTE DE WHATSAPP -------------------- */
+.whatsapp-flotante {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  background: #25D366;
+  color: var(--blanco);
+  text-decoration: none;
+  padding: 0.7em 0.7em;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px -6px rgba(0,0,0,0.35);
+  transition: padding var(--transicion), transform var(--transicion);
+}
+.whatsapp-flotante svg { width: 26px; height: 26px; flex-shrink: 0; }
+.whatsapp-flotante .wa-texto {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  transition: max-width var(--transicion);
+}
+.whatsapp-flotante:hover,
+.whatsapp-flotante:focus-visible,
+.whatsapp-flotante.expandido {
+  transform: translateY(-2px);
+  padding-right: 1em;
+}
+.whatsapp-flotante:hover .wa-texto,
+.whatsapp-flotante:focus-visible .wa-texto,
+.whatsapp-flotante.expandido .wa-texto {
+  max-width: 160px;
+}
+
+/* -------------------- 11b. BOTÓN "VOLVER ARRIBA" -------------------- */
+.volver-arriba {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1400;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: var(--azul-profundo);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -8px rgba(6,48,79,0.5);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity var(--transicion), transform var(--transicion), background var(--transicion);
+}
+.volver-arriba svg { width: 20px; height: 20px; }
+.volver-arriba.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.volver-arriba:hover { background: var(--azul-caribe); }
+
+@media (max-width: 720px) {
+  .volver-arriba { right: 16px; bottom: 16px; width: 42px; height: 42px; }
+}
+
+/* -------------------- 11b. BOTÓN "VOLVER ARRIBA" -------------------- */
+/* Aparece solo tras bajar cierto punto de la página (js/main.js).
+   Va al lado opuesto del botón de WhatsApp para no chocar en móvil. */
+.boton-arriba {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1400;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 999px;
+  background: var(--azul-caribe);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -6px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity var(--transicion), transform var(--transicion), background var(--transicion);
+}
+.boton-arriba.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.boton-arriba:hover { background: var(--azul-profundo); }
+.boton-arriba svg { width: 22px; height: 22px; }
+.boton-arriba:disabled { cursor: default; }
+
+@media (max-width: 720px) {
+  .boton-arriba { width: 46px; height: 46px; right: 16px; bottom: 16px; }
+}
+
+/* -------------------- 11c. SECCIONES DE PÁGINA ÚNICA -------------------- */
+.seccion-ancla { scroll-margin-top: 90px; }
+
+/* -------------------- 12. UTILIDADES -------------------- */
+.text-centro { text-align: center; margin-inline: auto; }
+.mt-0 { margin-top: 0; }
+
+/* -------------------- 13. RESPONSIVE -------------------- */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .franja-stats { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+}
+
+@media (max-width: 720px) {
+  :root { --fs-3xl: 2.3rem; --fs-2xl: 1.85rem; }
+
+  .btn-menu { display: flex; }
+
+  .nav-principal {
+    position: fixed;
+    inset: 64px 0 auto 0;
+    background: var(--azul-profundo);
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-2) var(--space-3) var(--space-3);
+    transform: translateY(-120%);
+    opacity: 0;
+    transition: transform var(--transicion), opacity var(--transicion);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .nav-principal.abierto { transform: translateY(0); opacity: 1; }
+  .nav-principal ul { flex-direction: column; gap: 0; width: 100%; }
+  .nav-principal a { display: block; padding: 0.9em 0.2em; border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .franja-stats { grid-template-columns: 1fr 1fr; }
+}
