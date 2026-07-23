@@ -4,11 +4,11 @@
    Valida el formulario en el cliente y guarda cada mensaje como
    un documento en la colección "mensajes" de Firestore.
 
-   CONFIGURACIÓN REQUERIDA ANTES DE PRODUCCIÓN:
-   1. Crea un proyecto en https://console.firebase.google.com
-   2. Activa Firestore Database (modo producción).
-   3. Registra una app web y copia su config en firebaseConfig abajo.
-   4. Define reglas de seguridad en Firestore, por ejemplo:
+   CONFIGURACIÓN :
+   1. Se crea un proyecto en https://console.firebase.google.com
+   2. Activada Firestore Database (modo producción).
+   3. Registrada laa app web y copia su config en firebaseConfig abajo.
+   4. Se define reglas de seguridad en Firestore, por ejemplo:
 
       rules_version = '2';
       service cloud.firestore {
@@ -21,6 +21,7 @@
           }
         }
       }
+      Para evitar la manipulación de datos por parte de externos
    ============================================================ */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -31,15 +32,29 @@ import {
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// TODO: reemplazar con la configuración real de tu proyecto Firebase.
-const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "tu-proyecto.firebaseapp.com",
-  projectId: "tu-proyecto",
-  storageBucket: "tu-proyecto.appspot.com",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:xxxxxxxxxxxxxxxx",
-};
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyC6h1UmU4UllC_VXkh1q10GARCTVcXgDBo",
+    authDomain: "fir-novacaribe.firebaseapp.com",
+    projectId: "fir-novacaribe",
+    storageBucket: "fir-novacaribe.firebasestorage.app",
+    messagingSenderId: "899731810933",
+    appId: "1:899731810933:web:77e7a60ddc088c0de5663c",
+    measurementId: "G-EXL28D0M9P"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
 const formulario = document.querySelector("#form-contacto");
 
