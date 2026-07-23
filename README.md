@@ -1,6 +1,6 @@
 # Sitio web — Textilería Nova Caribe Ltda.
 
-## Estructura (v2 — página única + formulario con Firebase)
+## Estructura (página única + formulario con Firebase)
 ```
 nova-caribe/
 ├── index.html                  (Página única: inicio + nosotros + precios + productos)
