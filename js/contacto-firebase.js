@@ -24,7 +24,7 @@
       Para evitar la manipulación de datos por parte de externos
    ============================================================ */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import {
   getFirestore,
   collection,
