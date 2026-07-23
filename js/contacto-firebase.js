@@ -30,19 +30,10 @@ import {
   collection,
   addDoc,
   serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 //Colocar la configuración de firebase real acá
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyC6h1UmU4UllC_VXkh1q10GARCTVcXgDBo",
     authDomain: "fir-novacaribe.firebaseapp.com",
     projectId: "fir-novacaribe",
@@ -51,11 +42,6 @@ import {
     appId: "1:899731810933:web:77e7a60ddc088c0de5663c",
     measurementId: "G-EXL28D0M9P"
   };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
 
 const formulario = document.querySelector("#form-contacto");
 
